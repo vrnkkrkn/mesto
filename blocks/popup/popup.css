@@ -1,0 +1,10 @@
+.popup {
+    position: fixed;
+    background: rgba(255, 255, 255, .95);
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 430px;
+    display: none;
+    border-radius: 10px;
+}

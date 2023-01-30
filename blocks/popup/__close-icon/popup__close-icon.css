@@ -1,0 +1,15 @@
+.popup__close-icon {
+    background-color: rgba(0, 0, 0, .95);
+    position: absolute;
+    top: -10%;
+    right: -10%;
+    background-image: url('../../../images/Close\ Icon.png');
+    background-color: transparent;
+    background-size: cover;
+    border: none;
+    padding: 15px;
+}
+
+.popup__close-icon:hover {
+    opacity: 0.6;
+}
