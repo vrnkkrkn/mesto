@@ -10,5 +10,6 @@
     .profile__info {
         max-width: 282px;
         margin: 26px 19px 0 19px;
+        text-align: center;
     }
 }

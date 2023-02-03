@@ -4,3 +4,16 @@
     grid-template-columns: repeat(auto-fit, minmax(282px, auto));
     border-radius: 10px;
 }
+
+@media screen and (max-width: 768px) {
+    .elements {
+        max-width: 500px;
+        grid-template-columns: repeat(auto-fit, minmax(282px, 1fr));
+    }
+}
+
+@media screen and (max-width: 320px) {
+    .element {
+        grid-template-columns: repeat(auto-fit, minmax(282px, auto));
+    }
+}

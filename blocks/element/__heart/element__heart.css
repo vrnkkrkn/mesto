@@ -1,8 +1,13 @@
 .element__heart {
-  max-width: 22px;
-  width: 100%;
-  object-fit: contain;
-  margin: 0;
+  width: 22px;
+  background-image: url('../../../images/VectorStroke.svg');
+  background-color: transparent;
+  border: none;
+  background-repeat: no-repeat;
+  background-position: inherit;
+  height: 19px;
+  cursor: pointer;
+  margin-left: 45px;
 }
 
 .element__heart:hover {
@@ -11,5 +16,5 @@
 
 .element__heart:active {
   opacity: 1;
-  background-image: url(../../../images/Union.png);
+  background-image: url(../../../images/Union.svg);
 }
