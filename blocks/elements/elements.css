@@ -9,16 +9,16 @@
 @media screen and (max-width: 1279px) {
     .elements {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, auto));
+        grid-template-columns: repeat(auto-fit, minmax(280px, auto));
         gap: 10px;
         margin: 40px auto;
-        max-width: 700px;
+        max-width: 600px;
     }
 }
 
 @media screen and (max-width: 768px) {
     .elements {
-        max-width: 500px;
+        max-width: 300px;
     }
 }
 

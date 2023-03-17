@@ -27,3 +27,8 @@
 @import url(../blocks/popup/__close-icon/popup__close-icon.css);
 @import url(../blocks/profile/__editing/profile__editing.css);
 @import url(../blocks/popup/_opened/popup_opened.css);
+@import url(../blocks/element/__trash/element__trash.css);
+@import url(../blocks/element/__heart/_active/element__heart_active.css);
+@import url(../blocks/popup/__container-image/popup__container-image.css);
+@import url(../blocks/element/__open-image/element__open-image.css);
+@import url(../blocks/element/__open-title/element__open-title.css);

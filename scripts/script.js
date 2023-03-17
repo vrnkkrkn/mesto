@@ -1,32 +1,141 @@
-let popup = document.querySelector('.popup');
-let popupCloseicon = document.querySelector('.popup__close-icon');
-let form = document.querySelector('.form');
-let formName = document.querySelector('.form__item_el_name');
-let formActivity = document.querySelector('.form__item_el_activity');
-let profileName = document.querySelector('.profile__name');
-let profileActivity = document.querySelector('.profile__activity');
-let profileEditbutton = document.querySelector('.profile__edit-button');
+const initialCards = [
+  {
+    name: 'Архыз',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
+  },
+  {
+    name: 'Челябинская область',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
+  },
+  {
+    name: 'Иваново',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
+  },
+  {
+    name: 'Камчатка',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
+  },
+  {
+    name: 'Холмогорский район',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
+  },
+  {
+    name: 'Байкал',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
+  }
+];
 
-/** Открытие popap с заполненными полями */
-function openedPopap() {
-    popup.classList.add('popup_opened');
-    formName.value = profileName.textContent;
-    formActivity.value = profileActivity.textContent;
+/** popup */
+const popup = document.querySelector('.popup');
+const popupEdit = document.querySelector('.popup_type_edit'); /** редактировать профиль */
+const popupAdd = document.querySelector('.popup_type_add'); /** добавить карточку */
+const popupImage = document.querySelector('.popup_type_image'); /** открыть картинку */
+
+/** все кнопки закрыть */
+const popupCloseIcon = document.querySelectorAll('.popup__close-icon');
+
+/** данные профиля */
+const profileActivity = document.querySelector('.profile__activity');
+const formEdit = document.querySelector('.form_type_edit');
+const formName = document.querySelector('.form__item_el_name');
+const formActivity = document.querySelector('.form__item_el_activity');
+const profileName = document.querySelector('.profile__name');
+const profileEditButton = document.querySelector('.profile__edit-button'); /** кнопка открытия popup */
+
+/** данные карточки */
+const formAdd = document.querySelector('.form_type_add');
+const formTitle = document.querySelector('.form__item_el_title');
+const formlink = document.querySelector('.form__item_el_link');
+const profileAddButton = document.querySelector('.profile__add-button'); /** кнопка открытия popup */
+
+/** для темплейта */
+const elements = document.querySelector('.elements');
+const elementTemplate = document.querySelector('#element-template').content;
+
+/** открытие popup */
+function openPopup(popup) {
+  popup.classList.add('popup_opened');
 }
 
-/** Закрытие popap */
-function closePopap() {
-    popup.classList.remove('popup_opened');
+/** закрытие popup */
+function closePopup(popup) {
+  popup.classList.remove('popup_opened');
 }
 
-/** Обработчик «отправки» формы */
+/** добавление карточки */
+function addCard(name, link) {
+  /** клонируем содержимое тега template */
+  const cardElement = elementTemplate.querySelector('.element').cloneNode(true);
+
+  /** наполняем содержимым */
+  cardElement.querySelector('.element__image').src = link;
+  cardElement.querySelector('.element__title').textContent = name;
+
+  /** лайк */
+  cardElement.querySelector('.element__heart').addEventListener('click', function (evt) {
+    evt.target.classList.toggle('element__heart_active');
+  });
+
+  /** удаление */
+  cardElement.querySelector('.element__trash').addEventListener('click', function (evt) {
+    evt.target.closest('.element').remove();
+  });
+
+  /**  открытие popup фотографии */
+  cardElement.querySelector('.element__image').addEventListener('click', function (evt) {
+    document.querySelector('.element__open-image').src = link;
+    document.querySelector('.element__open-title').textContent = name;
+    openPopup(popupImage);
+  });
+
+  return cardElement;
+}
+
+/** функция для того, чтобы можно было помещать новую карточку в верстку */
+function renderCard(name, link) {
+  const cardElement = addCard(name, link);
+  elements.prepend(cardElement);
+}
+
+/** 6 карточек на странице */
+initialCards.forEach((function (card) {
+  renderCard(card.name, card.link);
+}));
+
+/** обработчик «отправки» формы  для редактирования профиля*/
 function handleFormSubmit(evt) {
-    evt.preventDefault(); /** Эта строчка отменяет стандартную отправку формы. */
-    profileName.textContent = formName.value;
-    profileActivity.textContent = formActivity.value;
-    closePopap();
+  evt.preventDefault(); /** Эта строчка отменяет стандартную отправку формы. */
+  profileName.textContent = formName.value;
+  profileActivity.textContent = formActivity.value;
+  closePopup(popupEdit);
 }
 
-form.addEventListener('submit', handleFormSubmit);/** обработчик к форме: он будет следить за событием “submit” - «отправка» */
-profileEditbutton.addEventListener('click', openedPopap);
-popupCloseicon.addEventListener('click', closePopap);
+/** обработчик «отправки» формы  для добавления карточки*/
+function addCardHandleFormSubmit(evt) {
+  evt.preventDefault();
+  elements.prepend(addCard(formTitle.value, formlink.value));
+  closePopup(popupAdd);
+}
+
+/** закрытие popup при нажатии на крестик */
+popupCloseIcon.forEach(function (popupCloseIcon) {
+  popupCloseIcon.addEventListener('click', function (evt) {
+    closePopup(evt.target.closest('.popup'));
+  });
+});
+
+/** открытие popup редактирования с заполненными полями*/
+profileEditButton.addEventListener('click', function () {
+  openPopup(popupEdit);
+  formName.value = profileName.textContent;
+  formActivity.value = profileActivity.textContent;
+});
+
+/** открытие popup добавления */
+profileAddButton.addEventListener('click', function () {
+  openPopup(popupAdd);
+});
+
+/** обработчики к форме: они следят за событием “submit” - «отправка» */
+formEdit.addEventListener('submit', handleFormSubmit); /** для редактирования профиля */
+formAdd.addEventListener('submit', addCardHandleFormSubmit); /** для добавления карточки */
