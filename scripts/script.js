@@ -83,8 +83,8 @@ function addCard(name, link) {
 
   /**  открытие popup фотографии */
   cardElement.querySelector('.element__image').addEventListener('click', function (evt) {
-    document.querySelector('.element__open-image').src = link;
-    document.querySelector('.element__open-title').textContent = name;
+    document.querySelector('.popup__picture').src = link;
+    document.querySelector('.popup__text').textContent = name;
     openPopup(popupImage);
   });
 
