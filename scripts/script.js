@@ -32,7 +32,7 @@ const popupAdd = document.querySelector('.popup_type_add'); /** добавить
 const popupImage = document.querySelector('.popup_type_image'); /** открыть картинку */
 
 /** все кнопки закрыть */
-const popupCloseIcon = document.querySelectorAll('.popup__close-icon');
+const popupCloseIcons = document.querySelectorAll('.popup__close-icon');
 
 /** данные профиля */
 const profileActivity = document.querySelector('.profile__activity');
@@ -52,6 +52,10 @@ const profileAddButton = document.querySelector('.profile__add-button'); /** к�
 const elements = document.querySelector('.elements');
 const elementTemplate = document.querySelector('#element-template').content;
 
+/** фотография c названием */
+const popupPicture = document.querySelector('.popup__picture');
+const popupText = document.querySelector('.popup__text');
+
 /** открытие popup */
 function openPopup(popup) {
   popup.classList.add('popup_opened');
@@ -66,9 +70,11 @@ function closePopup(popup) {
 function addCard(name, link) {
   /** клонируем содержимое тега template */
   const cardElement = elementTemplate.querySelector('.element').cloneNode(true);
+  const elementImage = cardElement.querySelector('.element__image');
 
   /** наполняем содержимым */
-  cardElement.querySelector('.element__image').src = link;
+  elementImage.src = link;
+  elementImage.alt = name;
   cardElement.querySelector('.element__title').textContent = name;
 
   /** лайк */
@@ -82,9 +88,10 @@ function addCard(name, link) {
   });
 
   /**  открытие popup фотографии */
-  cardElement.querySelector('.element__image').addEventListener('click', function (evt) {
-    document.querySelector('.popup__picture').src = link;
-    document.querySelector('.popup__text').textContent = name;
+  elementImage.addEventListener('click', function (evt) {
+    popupPicture.src = link;
+    popupPicture.alt = name;
+    popupText.textContent = name;
     openPopup(popupImage);
   });
 
@@ -115,11 +122,12 @@ function addCardHandleFormSubmit(evt) {
   evt.preventDefault();
   elements.prepend(addCard(formTitle.value, formlink.value));
   closePopup(popupAdd);
+  evt.target.reset();
 }
 
 /** закрытие popup при нажатии на крестик */
-popupCloseIcon.forEach(function (popupCloseIcon) {
-  popupCloseIcon.addEventListener('click', function (evt) {
+popupCloseIcons.forEach(function (popupCloseIcons) {
+  popupCloseIcons.addEventListener('click', function (evt) {
     closePopup(evt.target.closest('.popup'));
   });
 });
