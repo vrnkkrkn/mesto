@@ -26,7 +26,7 @@ const initialCards = [
 ];
 
 /** popup */
-const popup = document.querySelector('.popup');
+const popups = document.querySelectorAll('.popup');
 const popupEdit = document.querySelector('.popup_type_edit'); /** редактировать профиль */
 const popupAdd = document.querySelector('.popup_type_add'); /** добавить карточку */
 const popupImage = document.querySelector('.popup_type_image'); /** открыть картинку */
@@ -109,6 +109,23 @@ initialCards.forEach((function (card) {
   renderCard(card.name, card.link);
 }));
 
+/** закрытие попапа кликом на оверлей */
+popups.forEach(function (closePopupOverlay) {
+  closePopupOverlay.addEventListener('mousedown', function (evt) {
+    if (evt.target.classList.contains('popup_opened')) {
+      closePopup(evt.target);
+    }
+  })
+});
+
+/** закрытие попапа нажатием на Esc */
+function closePopupEsc(evt) {
+  if (evt.key === 'Escape') {
+    const popupOpened = document.querySelector('.popup_opened')
+    closePopup(popupOpened);
+  }
+};
+
 /** обработчик «отправки» формы  для редактирования профиля*/
 function handleFormSubmit(evt) {
   evt.preventDefault(); /** Эта строчка отменяет стандартную отправку формы. */
@@ -147,3 +164,8 @@ profileAddButton.addEventListener('click', function () {
 /** обработчики к форме: они следят за событием “submit” - «отправка» */
 formEdit.addEventListener('submit', handleFormSubmit); /** для редактирования профиля */
 formAdd.addEventListener('submit', addCardHandleFormSubmit); /** для добавления карточки */
+
+/** закрыть попапы кликом на esc */
+popupAdd.addEventListener('keydown', closePopupEsc);
+popupEdit.addEventListener('keydown', closePopupEsc);
+popupImage.addEventListener('keydown', closePopupEsc);
