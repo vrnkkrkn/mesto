@@ -49,7 +49,7 @@ const formlink = document.querySelector('.form__item_el_link');
 const profileAddButton = document.querySelector('.profile__add-button'); /** кнопка открытия popup */
 
 /** для темплейта */
-const elements = document.querySelector('.elements');
+const elementsContainer = document.querySelector('.elements');
 const elementTemplate = document.querySelector('#element-template').content;
 
 /** фотография c названием */
@@ -59,11 +59,13 @@ const popupText = document.querySelector('.popup__text');
 /** открытие popup */
 function openPopup(popup) {
   popup.classList.add('popup_opened');
+  document.addEventListener('keydown', closePopupEsc);
 }
 
 /** закрытие popup */
 function closePopup(popup) {
   popup.classList.remove('popup_opened');
+  document.removeEventListener('keydown', closePopupEsc);
 }
 
 /** добавление карточки */
@@ -101,7 +103,7 @@ function addCard(name, link) {
 /** функция для того, чтобы можно было помещать новую карточку в верстку */
 function renderCard(name, link) {
   const cardElement = addCard(name, link);
-  elements.prepend(cardElement);
+  elementsContainer.prepend(cardElement);
 }
 
 /** 6 карточек на странице */
@@ -137,9 +139,13 @@ function handleFormSubmit(evt) {
 /** обработчик «отправки» формы  для добавления карточки*/
 function addCardHandleFormSubmit(evt) {
   evt.preventDefault();
-  elements.prepend(addCard(formTitle.value, formlink.value));
+  elementsContainer.prepend(addCard(formTitle.value, formlink.value));
   closePopup(popupAdd);
   evt.target.reset();
+  /**  деактивация кнопки сохранения */
+  const popupButton = evt.target.querySelector('.popup__button');
+  popupButton.classList.add('popup__button_disabled');
+  popupButton.disabled = true;
 }
 
 /** закрытие popup при нажатии на крестик */
@@ -164,8 +170,3 @@ profileAddButton.addEventListener('click', function () {
 /** обработчики к форме: они следят за событием “submit” - «отправка» */
 formEdit.addEventListener('submit', handleFormSubmit); /** для редактирования профиля */
 formAdd.addEventListener('submit', addCardHandleFormSubmit); /** для добавления карточки */
-
-/** закрыть попапы кликом на esc */
-popupAdd.addEventListener('keydown', closePopupEsc);
-popupEdit.addEventListener('keydown', closePopupEsc);
-popupImage.addEventListener('keydown', closePopupEsc);
