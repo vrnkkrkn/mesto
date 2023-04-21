@@ -1,3 +1,5 @@
+import Card from './card.js';
+
 const initialCards = [
   {
     name: 'Архыз',
@@ -69,47 +71,20 @@ function closePopup(popup) {
 }
 
 /** добавление карточки */
-function addCard(name, link) {
-  /** клонируем содержимое тега template */
-  const cardElement = elementTemplate.querySelector('.element').cloneNode(true);
-  const elementImage = cardElement.querySelector('.element__image');
+function addCard(cardElement) {
 
-  /** наполняем содержимым */
-  elementImage.src = link;
-  elementImage.alt = name;
-  cardElement.querySelector('.element__title').textContent = name;
-
-  /** лайк */
-  cardElement.querySelector('.element__heart').addEventListener('click', function (evt) {
-    evt.target.classList.toggle('element__heart_active');
-  });
-
-  /** удаление */
-  cardElement.querySelector('.element__trash').addEventListener('click', function (evt) {
-    evt.target.closest('.element').remove();
-  });
-
-  /**  открытие popup фотографии */
-  elementImage.addEventListener('click', function (evt) {
-    popupPicture.src = link;
-    popupPicture.alt = name;
-    popupText.textContent = name;
-    openPopup(popupImage);
-  });
-
-  return cardElement;
+  return new Card(cardElement, '#element-template');
 }
 
 /** функция для того, чтобы можно было помещать новую карточку в верстку */
-function renderCard(name, link) {
-  const cardElement = addCard(name, link);
+function renderCard(cardElement) {
   elementsContainer.prepend(cardElement);
 }
 
 /** 6 карточек на странице */
-initialCards.forEach((function (card) {
-  renderCard(card.name, card.link);
-}));
+initialCards.forEach((cardElement) => { 
+  renderCard(addCard(cardElement));
+});
 
 /** закрытие попапа кликом на оверлей */
 popups.forEach(function (closePopupOverlay) {
@@ -139,7 +114,8 @@ function handleFormSubmit(evt) {
 /** обработчик «отправки» формы  для добавления карточки*/
 function addCardHandleFormSubmit(evt) {
   evt.preventDefault();
-  elementsContainer.prepend(addCard(formTitle.value, formlink.value));
+  const cards = { name: formTitle.value, link: formlink.value}
+  renderCard(addCard(cards));
   closePopup(popupAdd);
   evt.target.reset();
   /**  деактивация кнопки сохранения */
