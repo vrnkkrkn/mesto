@@ -9,6 +9,7 @@ export default class FormValidator {
   }
 
 
+
   _showError(item, errorMessage) {
     this._errorElement = this._form.querySelector(`#${item.id}-error`);
     item.classList.add(this._inputErrorClass);
@@ -63,7 +64,13 @@ export default class FormValidator {
     }
   };
 
+  resetValidation() {
+    this._toggleButtonState();
+    this._itemList.forEach((item) => {
+      this._hideError(item);
+    });
 
+  }
 }
 
 

@@ -4,6 +4,9 @@ export default class Card {
         this._link = data.link;
         this._templateSelector = templateSelector;
         this._openPopupImage = openPopupImage;
+        this._popupImage = document.querySelector('.popup_type_image');
+        this._popupPicture = document.querySelector('.popup__picture');
+        this._popupText = document.querySelector('.popup__text');
     }
 
     /** темплейт */
@@ -46,16 +49,11 @@ export default class Card {
 
     /** картинка */
     _openImagePopup() {
-        this._popupImage = document.querySelector('.popup_type_image');
-        this._popupPicture = document.querySelector('.popup__picture');
-        this._popupText = document.querySelector('.popup__text');
-
         this._popupPicture.src = this._link;
         this._popupPicture.alt = this._name;
         this._popupText.textContent = this._name;
 
         this._openPopupImage(this._popupImage);
-
     }
 
     /** обработчики */

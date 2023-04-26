@@ -126,10 +126,7 @@ function addCardHandleFormSubmit(evt) {
   renderCard({ name: formTitle.value, link: formlink.value });
   closePopup(popupAdd);
   evt.target.reset();
-  /**  деактивация кнопки сохранения */
-  const popupButton = evt.target.querySelector('.popup__button');
-  popupButton.classList.add('popup__button_disabled');
-  popupButton.disabled = true;
+  formAddValidator.resetValidation();
 }
 
 /** закрытие popup при нажатии на крестик */
