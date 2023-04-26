@@ -1,30 +1,37 @@
- export default class Card {
-    constructor(card, templateSelector) {
-        this._name = card.name;
-        this._link = card.link;
+export default class Card {
+    constructor(data, templateSelector, openPopupImage) {
+        this._name = data.name;
+        this._link = data.link;
         this._templateSelector = templateSelector;
+        this._openPopupImage = openPopupImage;
     }
 
+    /** темплейт */
     _getTemplate() {
-        const cardElement = document.querySelector(this._templateSelector).content.querySelector('.element').cloneNode(true);
+        const cardElement = document
+            .querySelector(this._templateSelector)
+            .content
+            .querySelector('.element')
+            .cloneNode(true);
 
         return cardElement;
     }
 
+    /** создать карточку */
     generateCard() {
-        this._card = this._getTemplate();
+        this._element = this._getTemplate();
 
-        this._elementImage = this._card.querySelector('.element__image');
-        this._elementTitle = this._card.querySelector('.element__title');
-        this._elementTrash = this._card.querySelector('.element__trash');
-        this._elementHeart = this._card.querySelector('.element__heart');
+        this._elementImage = this._element.querySelector('.element__image');
+        this._elementTitle = this._element.querySelector('.element__title');
+        this._elementTrash = this._element.querySelector('.element__trash');
+        this._elementHeart = this._element.querySelector('.element__heart');
 
         this._elementImage.src = this._link;
         this._elementImage.alt = this._name;
         this._elementTitle.textContent = this._name;
 
         this._setEventListeners();
-        return this._card;
+        return this._element;
     }
 
     /** лайк */
@@ -34,30 +41,35 @@
 
     /** удаление */
     _deleteCard() {
-        this._card.remove();
-
+        this._element.remove();
     }
 
-    _openPopupImage() {
+    /** картинка */
+    _openImagePopup() {
+        this._popupImage = document.querySelector('.popup_type_image');
+        this._popupPicture = document.querySelector('.popup__picture');
+        this._popupText = document.querySelector('.popup__text');
+
         this._popupPicture.src = this._link;
         this._popupPicture.alt = this._name;
         this._popupText.textContent = this._name;
-        this._openPopup(this._popupImage);
+
+        this._openPopupImage(this._popupImage);
+
     }
 
-
+    /** обработчики */
     _setEventListeners() {
         this._elementHeart.addEventListener('click', () => {
             this._likeCard();
         });
 
-        this.elementTrash.addEventListener('click', () => {
+        this._elementTrash.addEventListener('click', () => {
             this._deleteCard();
         });
 
         this._elementImage.addEventListener('click', () => {
-            this.openPopupImage();
+            this._openImagePopup();
         });
     }
-    }
-  
+}

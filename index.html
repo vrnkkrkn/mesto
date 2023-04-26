@@ -24,10 +24,10 @@
       </div>
       <button type="button" class="profile__add-button"></button>
     </section>
-    <div class="elements"></div>
+    <ul class="elements"></ul>
   </main>
   <footer class="footer">
-    <p class="footer__copyright">©2020 Mesto Russia</p>
+    <p class="footer__copyright">©2023 Mesto Russia</p>
   </footer>
   <!--popup: редактировать профиль-->
   <section class="popup popup_type_edit">
@@ -35,9 +35,11 @@
       <button type="button" class="popup__close-icon"></button>
       <h2 class="popup__title">Редактировать профиль</h2>
       <form class="form form_type_edit" name="edit" novalidate>
-        <input type="text" id="name" name="name" class="form__item form__item_el_name" minlength="2" maxlength="40" required>
+        <input type="text" id="name" name="name" class="form__item form__item_el_name" minlength="2" maxlength="40"
+          required>
         <span class='form__item-error' id='name-error'></span>
-        <input type="text" id="activity" name="activity" class="form__item form__item_el_activity" minlength="2" maxlength="200" required>
+        <input type="text" id="activity" name="activity" class="form__item form__item_el_activity" minlength="2"
+          maxlength="200" required>
         <span class='form__item-error' id='activity-error'></span>
         <button type="submit" class="popup__button">Сохранить</button>
       </form>
@@ -49,9 +51,11 @@
       <button type="button" class="popup__close-icon"></button>
       <h2 class="popup__title">Новое место</h2>
       <form class="form form_type_add" name="add" novalidate>
-        <input type="text" id="title" placeholder="Название" name="title" class="form__item form__item_el_title" minlength="2" maxlength="30" required>
+        <input type="text" id="title" placeholder="Название" name="title" class="form__item form__item_el_title"
+          minlength="2" maxlength="30" required>
         <span class='form__item-error' id='title-error'></span>
-        <input type="url" id="link" placeholder="Ссылка на картинку" name="link" class="form__item form__item_el_link" required>
+        <input type="url" id="link" placeholder="Ссылка на картинку" name="link" class="form__item form__item_el_link"
+          required>
         <span class='form__item-error' id='link-error'></span>
         <button type="submit" class="popup__button">Создать</button>
       </form>
@@ -59,14 +63,14 @@
   </section>
   <!--темплейт-->
   <template id="element-template">
-    <article class="element">
+    <li class="element">
       <img src="#" alt="Фотография" class="element__image">
       <div class="element__group">
         <h2 class="element__title"></h2>
         <button type="button" class="element__heart"></button>
       </div>
       <button type="button" class="element__trash"></button>
-    </article>
+    </li>
   </template>
   <!--popup: картинка-->
   <section class="popup popup_type_image">
@@ -76,9 +80,7 @@
       <h2 class="popup__text"></h2>
     </div>
   </section>
-
-  <script type="module" src="scripts/validate.js"></script>
-  <script type="module" src="./scripts/card.js"></script>
+  <script type="module" src="./scripts/validate.js"></script>
   <script type="module" src="./scripts/script.js"></script>
 </body>
 

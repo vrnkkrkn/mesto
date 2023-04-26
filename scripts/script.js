@@ -1,4 +1,7 @@
 import Card from './card.js';
+import FormValidator from './FormValidator.js';
+import { validationConfig } from './validate.js';
+
 
 const initialCards = [
   {
@@ -31,7 +34,6 @@ const initialCards = [
 const popups = document.querySelectorAll('.popup');
 const popupEdit = document.querySelector('.popup_type_edit'); /** редактировать профиль */
 const popupAdd = document.querySelector('.popup_type_add'); /** добавить карточку */
-const popupImage = document.querySelector('.popup_type_image'); /** открыть картинку */
 
 /** все кнопки закрыть */
 const popupCloseIcons = document.querySelectorAll('.popup__close-icon');
@@ -52,11 +54,16 @@ const profileAddButton = document.querySelector('.profile__add-button'); /** к�
 
 /** для темплейта */
 const elementsContainer = document.querySelector('.elements');
-const elementTemplate = document.querySelector('#element-template').content;
 
-/** фотография c названием */
-const popupPicture = document.querySelector('.popup__picture');
-const popupText = document.querySelector('.popup__text');
+/** экземпляр класса валидатора*/
+const formEditValidator = new FormValidator(validationConfig, formEdit);
+/** включение */
+formEditValidator.enableValidation();
+
+/** экземпляр класса валидатора*/
+const formAddValidator = new FormValidator(validationConfig, formAdd);
+/** включение */
+formAddValidator.enableValidation();
 
 /** открытие popup */
 function openPopup(popup) {
@@ -71,19 +78,21 @@ function closePopup(popup) {
 }
 
 /** добавление карточки */
-function addCard(cardElement) {
-
-  return new Card(cardElement, '#element-template');
+function addCard(element) {
+  const card = new Card(element, '#element-template', openPopup);
+  const cardElement = card.generateCard();
+  return cardElement;
 }
 
 /** функция для того, чтобы можно было помещать новую карточку в верстку */
-function renderCard(cardElement) {
+function renderCard(element) {
+  const cardElement = addCard(element)
   elementsContainer.prepend(cardElement);
 }
 
 /** 6 карточек на странице */
-initialCards.forEach((cardElement) => { 
-  renderCard(addCard(cardElement));
+initialCards.forEach(function (element) {
+  renderCard(element);
 });
 
 /** закрытие попапа кликом на оверлей */
@@ -114,8 +123,7 @@ function handleFormSubmit(evt) {
 /** обработчик «отправки» формы  для добавления карточки*/
 function addCardHandleFormSubmit(evt) {
   evt.preventDefault();
-  const cards = { name: formTitle.value, link: formlink.value}
-  renderCard(addCard(cards));
+  renderCard({ name: formTitle.value, link: formlink.value });
   closePopup(popupAdd);
   evt.target.reset();
   /**  деактивация кнопки сохранения */
