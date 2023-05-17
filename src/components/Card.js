@@ -1,12 +1,9 @@
 export default class Card {
-    constructor(data, templateSelector, openPopupImage) {
-        this._name = data.name;
+    constructor(data, templateSelector, handleCardClick) {
+        this._name = data.title;
         this._link = data.link;
         this._templateSelector = templateSelector;
-        this._openPopupImage = openPopupImage;
-        this._popupImage = document.querySelector('.popup_type_image');
-        this._popupPicture = document.querySelector('.popup__picture');
-        this._popupText = document.querySelector('.popup__text');
+        this._handleCardClick = handleCardClick;
     }
 
     /** темплейт */
@@ -47,15 +44,6 @@ export default class Card {
         this._element.remove();
     }
 
-    /** картинка */
-    _openImagePopup() {
-        this._popupPicture.src = this._link;
-        this._popupPicture.alt = this._name;
-        this._popupText.textContent = this._name;
-
-        this._openPopupImage(this._popupImage);
-    }
-
     /** обработчики */
     _setEventListeners() {
         this._elementHeart.addEventListener('click', () => {
@@ -67,7 +55,7 @@ export default class Card {
         });
 
         this._elementImage.addEventListener('click', () => {
-            this._openImagePopup();
+            this._handleCardClick(this._name, this._link);
         });
     }
 }
