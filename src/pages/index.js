@@ -11,11 +11,9 @@ import {
   popupTypeImageSelector,
   popupTypeAddSelector,
   popupTypeEditSelector,
-  profileActivity,
   formEdit,
   formName,
   formActivity,
-  profileName,
   profileEditButton,
   formAdd,
   profileAddButton
@@ -51,19 +49,19 @@ cardList.renderItems();
 
 
 /** экземпляр класса PopupWithImage для popup с картинкой */
-const popupImage = new PopupWithImage(popupTypeImageSelector);
+const popupWithImage = new PopupWithImage(popupTypeImageSelector);
 
 function openPopupImage(title, link) {
-  popupImage.open(title, link);
+  popupWithImage.open(title, link);
 }
 
+popupWithImage.setEventListeners();
 
 /** экземпляр класса PopupWithForm для popup добавления карточки */
 const popupWithFormAdd = new PopupWithForm({
   popupSelector: popupTypeAddSelector,
-  formSubmit: (evt) => {
-    evt.preventDefault();
-    cardList.addItem(addCard(popupWithFormAdd.getInputValues()));
+  handleFormSubmit: (data) => {
+    cardList.addItem(addCard(data));
     popupWithFormAdd.close();
   }
 });
@@ -87,9 +85,8 @@ const userInfo = new UserInfo({
 /** экземпляр класса PopupWithForm для popup редактирования профиля */
 const popupWithFormEdit = new PopupWithForm({
   popupSelector: popupTypeEditSelector,
-  formSubmit: (evt) => {
-    evt.preventDefault();
-    userInfo.setUserInfo(popupWithFormEdit.getInputValues());
+  handleFormSubmit: (data) => {
+    userInfo.setUserInfo(data);
     popupWithFormEdit.close();
   }
 });
@@ -97,8 +94,8 @@ const popupWithFormEdit = new PopupWithForm({
 /** открытие  popup редактирования профиля*/
 profileEditButton.addEventListener('click', () => {
   popupWithFormEdit.open();
-  formName.value = profileName.textContent;
-  formActivity.value = profileActivity.textContent;
+  formName.value = userInfo.getUserInfo().userName;
+  formActivity.value = userInfo.getUserInfo().activity;
   formEditValidator.resetValidation();
 });
 

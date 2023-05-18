@@ -3,6 +3,8 @@ export default class Popup {
   constructor(popupSelector) {
     this._popup = document.querySelector(popupSelector);
     this._popupCloseIcon = this._popup.querySelector('.popup__close-icon');
+    this._popupPicture = this._popup.querySelector('.popup__picture');
+    this._popupText = this._popup.querySelector('.popup__text');
   }
 
   /** открытие popup */
@@ -15,7 +17,6 @@ export default class Popup {
   close() {
     this._popup.classList.remove('popup_opened');
     document.removeEventListener('keydown', this._handleEscClose);
-    this.setEventListeners()
   }
 
   /** закрытие попапа нажатием на Esc */
