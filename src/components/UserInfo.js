@@ -1,8 +1,10 @@
 /** Класс UserInfo отвечает за управление отображением информации о пользователе на странице */
 export default class UserInfo {
-  constructor({ userNameSelector, userActivitySelector }) {
+  constructor({ userNameSelector, userActivitySelector, userAvatarSelector }) {
     this._userName = document.querySelector(userNameSelector);
     this._activity = document.querySelector(userActivitySelector);
+    this._avatar = document.querySelector(userAvatarSelector);
+
   }
 
   /** метод, который возвращает объект с данными пользователя */
@@ -16,8 +18,9 @@ export default class UserInfo {
   }
 
   /** метод, который принимает новые данные пользователя и добавляет их на страницу */
-  setUserInfo(info) {
-    this._userName.textContent = info.userName;
-    this._activity.textContent = info.activity;
+  setUserInfo({ userName, activity, avatar }) {
+    this._userName.textContent = userName;
+    this._activity.textContent = activity;
+    this._avatar.src = avatar;
   }
 }
