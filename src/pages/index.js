@@ -119,6 +119,7 @@ popupWithImage.setEventListeners();
 
 /** экземпляр класса PopupWithForm для popup добавления карточки */
 const popupWithFormAdd = new PopupWithForm(popupTypeAddSelector, (data, submitButton) => {
+  popupWithFormAdd.changeSubmitButton(true);
   api.addNewCard(data)
     /** обрабатываем результат */
     .then(result => {
@@ -130,7 +131,7 @@ const popupWithFormAdd = new PopupWithForm(popupTypeAddSelector, (data, submitBu
       console.log(error);
     })
     .finally(() => {
-      submitButton.textContent = 'Сохранить';
+      popupWithFormAdd.changeSubmitButton(false);
     });
 });
 
@@ -151,6 +152,7 @@ const userInfo = new UserInfo({
 
 /** экземпляр класса PopupWithForm для popup редактирования профиля */
 const popupWithFormEdit = new PopupWithForm(popupTypeEditSelector, (data, submitButton) => {
+  popupWithFormEdit.changeSubmitButton(true);
   api.setUserInfo(data)
     /** обрабатываем результат */
     .then(result => {
@@ -162,13 +164,14 @@ const popupWithFormEdit = new PopupWithForm(popupTypeEditSelector, (data, submit
       console.log(error);
     })
     .finally(() => {
-      submitButton.textContent = 'Сохранить';
+      popupWithFormEdit.changeSubmitButton(false);
     });
 });
 popupWithFormEdit.setEventListeners();
 
 /** аватар */
 const popupAvatar = new PopupWithForm(popupTypeAvatarSelector, (data, submitButton) => {
+  popupAvatar.changeSubmitButton(true);
   api.setAvatar(data)
     /** обрабатываем результат */
     .then(result => {
@@ -180,7 +183,7 @@ const popupAvatar = new PopupWithForm(popupTypeAvatarSelector, (data, submitButt
       console.log(error);
     })
     .finally(() => {
-      submitButton.textContent = 'Сохранить';
+      popupAvatar.changeSubmitButton(false);
     });
 });
 popupAvatar.setEventListeners();
